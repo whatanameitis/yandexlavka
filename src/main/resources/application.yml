@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/yandex?currentSchema=yandex
+    username: postgres
+    password:
+    hikari:
+      data-source-properties:
+        stringtype: unspecified
+
+  servlet:
+    multipart.max-file-size: 10MB
+    multipart.max-request-size: 10MB
+
+  multipart:
+    enabled: true
+    file-size-threshold: 2KB
+    max-file-size: 100MB
+    max-request-size: 300MB
+  application:
+    name: MySpring
+    version: 1.0
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: public
+        show_sql: true
+        format_sql: true
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        temp:
+          use_jdbc_metadata_defaults: false
+        order_by:
+          default_null_ordering: last
+#        dialect:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: "classpath:db/migration"
+    schemas: public
+    placeholder-replacement: false
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          client:
+            RestTemplate: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
