@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("")
 @RequiredArgsConstructor
 public class CourierController {
-
     private final CourierService courierService;
 
     @GetMapping(value = "/couriers")

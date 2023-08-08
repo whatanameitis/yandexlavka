@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import ru.grisha.myspring.utility.CourierType;
-
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +27,7 @@ public class Courier {
     @Column(name = "type")
     private CourierType courierType;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "courier_region",
             schema = "yandex",
@@ -37,7 +36,7 @@ public class Courier {
     )
     private Set<Region> regions;
 
-    @OneToMany(mappedBy = "courier")
+    @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL)
     @Column(name = "order")
     private List<Order> orders;
 }

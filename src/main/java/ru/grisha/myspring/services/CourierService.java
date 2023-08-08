@@ -5,17 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.grisha.myspring.dto.CourierDTO;
-
 import ru.grisha.myspring.entity.Courier;
 import ru.grisha.myspring.mappers.CourierDTOMapper;
 import ru.grisha.myspring.mappers.CourierRequestDTOMapper;
 import ru.grisha.myspring.repositories.CouriersRepository;
 import ru.grisha.myspring.requests.CourierRequestDTO;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -26,6 +23,7 @@ public class CourierService {
     private final CourierDTOMapper toCourierDTO;
 
     private final CourierRequestDTOMapper toCourier;
+    @Transactional
     public Page<CourierDTO> getCouriers(Integer offset, Integer limit) {
         List<CourierDTO> listResponse = couriersRepository.
                 findAll(PageRequest.of(offset, limit)).
@@ -40,6 +38,7 @@ public class CourierService {
         List<Courier> couriers = courierRequestDTOS.stream().map(toCourier).toList();
         couriersRepository.saveAll(couriers);
     }
+
     public CourierDTO getCourier(Long id) {
         return couriersRepository.findById(id).map(toCourierDTO).orElse(null);
     }
